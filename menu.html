@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - BrewMate</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="coffee-icon">☕</span>
+                <span class="logo-text">BrewMate</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="menu.html" class="nav-link active">Menu</a></li>
+                <li><a href="delivery.html" class="nav-link">Track Order</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+              <div class="cart-icon" onclick="window.location.href='menu.html#cart'">
+                🛒 <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Section -->
+    <section class="menu-page">
+        <div class="container">
+            <h1 class="page-title">Customize Your Perfect Cup</h1>
+
+            <div class="menu-builder">
+                <div class="builder-step">
+                    <h3>1. Choose Your Coffee</h3>
+                    <div class="coffee-options">
+                        <div class="option-card" data-coffee="espresso">
+                            <span class="option-icon">☕</span>
+                            <h4>Espresso</h4>
+                            <p>$3.50</p>
+                        </div>
+                        <div class="option-card" data-coffee="latte">
+                            <span class="option-icon">🥛</span>
+                            <h4>Latte</h4>
+                            <p>$4.50</p>
+                        </div>
+                        <div class="option-card" data-coffee="cappuccino">
+                            <span class="option-icon">☕</span>
+                            <h4>Cappuccino</h4>
+                            <p>$4.00</p>
+                        </div>
+                        <div class="option-card" data-coffee="mocha">
+                            <span class="option-icon">🍫</span>
+                            <h4>Mocha</h4>
+                            <p>$5.00</p>
+                        </div>
+                        <div class="option-card" data-coffee="americano">
+                            <span class="option-icon">☕</span>
+                            <h4>Americano</h4>
+                            <p>$3.00</p>
+                        </div>
+                        <div class="option-card" data-coffee="coldbrew">
+                            <span class="option-icon">🧊</span>
+                            <h4>Cold Brew</h4>
+                            <p>$4.50</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="builder-step">
+                    <h3>2. Select Size</h3>
+                    <div class="size-options">
+                        <button class="size-btn" data-size="small">Small</button>
+                        <button class="size-btn" data-size="medium">Medium</button>
+                        <button class="size-btn" data-size="large">Large</button>
+                    </div>
+                </div>
+
+                <div class="builder-step">
+                    <h3>3. Customize Your Drink</h3>
+                    <div class="customization">
+                        <div class="custom-option">
+                            <label>Milk Type:</label>
+                            <select id="milkType">
+                                <option value="regular">Regular</option>
+                                <option value="almond">Almond</option>
+                                <option value="oat">Oat</option>
+                                <option value="soy">Soy</option>
+                            </select>
+                        </div>
+                        <div class="custom-option">
+                            <label>Sweetness:</label>
+                            <select id="sweetness">
+                                <option value="none">None</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="custom-option">
+                            <label>Extra Shots:</label>
+                            <input type="number" id="extraShots" min="0" max="3" value="0">
+                        </div>
+                        <div class="custom-option">
+                            <label>Flavor:</label>
+                            <select id="flavor">
+                                <option value="none">None</option>
+                                <option value="vanilla">Vanilla</option>
+                                <option value="caramel">Caramel</option>
+                                <option value="hazelnut">Hazelnut</option>
+                                <option value="chocolate">Chocolate</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="add-to-cart-btn" id="addToCart">Add to Cart</button>
+            </div>
+
+            <!-- Coffee Making Animation -->
+            <div class="coffee-making-animation" id="coffeeAnimation" style="display: none;">
+                <h3>Crafting Your Perfect Cup ☕</h3>
+                <div class="making-process">
+                    <div class="brewing-machine">
+                        <div class="machine-body"></div>
+                        <div class="machine-top"></div>
+                        <div class="coffee-dispenser"></div>
+                        <div class="coffee-stream"></div>
+                    </div>
+                    <div class="brewing-cup">
+                        <div class="cup-fill"></div>
+                    </div>
+                    <div class="brewing-steps">
+                        <div class="step step-active">Grinding beans... ☕</div>
+                        <div class="step">Heating water... 🔥</div>
+                        <div class="step">Brewing... 💧</div>
+                        <div class="step">Adding milk... 🥛</div>
+                        <div class="step">Finalizing... ✨</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 BrewMate. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="cart-system.js"></script>
+</body>
+
+</html>

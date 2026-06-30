@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - BrewMate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6F4E37;
+            --secondary-color: #8B6F47;
+            --accent-color: #D4A574;
+            --dark-color: #2C1810;
+            --darker-bg: #1a0f0a;
+            --light-color: #3E2723;
+            --text-light: #F5E6D3;
+            --gradient: linear-gradient(135deg, #6F4E37 0%, #8B6F47 100%);
+            --gradient-dark: linear-gradient(135deg, #2C1810 0%, #3E2723 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-light);
+            background: var(--darker-bg);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--gradient-dark);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .coffee-icon {
+            font-size: 2rem;
+            animation: rotate 3s infinite;
+        }
+
+        @keyframes rotate {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(20deg); }
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent-color);
+        }
+
+        .cart-icon {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+            color: var(--accent-color);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            animation: pulse-badge 2s infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Contact Page */
+        .contact-page {
+            min-height: calc(100vh - 200px);
+            padding: 8rem 2rem 4rem;
+            margin-top: 0;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            font-style: italic;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes steamRise {
+            0% {
+                opacity: 0.7;
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                opacity: 0.4;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px) scale(1.5);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(20deg); }
+            75% { transform: rotate(-20deg); }
+        }
+
+        @keyframes characterFloat {
+            0%, 100% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        @keyframes characterEntrance {
+            from {
+                transform: translateX(200px) rotate(20deg);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes handleWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        @keyframes blink {
+            0%, 48%, 52%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.1); }
+        }
+
+        @keyframes smileChange {
+            0%, 100% { width: 40px; }
+            50% { width: 45px; }
+        }
+
+        @keyframes bubblePop {
+            0% {
+                transform: translateX(-50%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: translateX(-50%) scale(1.1);
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bubbleFloat {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        /* Contact Info Section */
+        .contact-info {
+            background: var(--light-color);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeInLeft 0.8s ease-out 0.3s backwards;
+        }
+
+        .contact-info h2 {
+            font-size: 1.9rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .contact-info > p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--dark-color);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+            animation: slideInLeft 0.6s ease-out forwards;
+        }
+
+        .info-item:nth-child(1) { animation-delay: 0.5s; }
+        .info-item:nth-child(2) { animation-delay: 0.6s; }
+        .info-item:nth-child(3) { animation-delay: 0.7s; }
+        .info-item:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .info-item:hover {
+            transform: translateX(10px) scale(1.02);
+            background: var(--primary-color);
+            box-shadow: 0 8px 24px rgba(212, 165, 116, 0.3);
+        }
+
+        .info-icon {
+            font-size: 2.2rem;
+            min-width: 2.5rem;
+            text-align: center;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .info-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .info-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .social-section {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--primary-color);
+        }
+
+        .social-section h4 {
+            margin-bottom: 1.2rem;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: var(--primary-color);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid var(--secondary-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(212, 165, 116, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .social-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .social-btn:hover {
+            background: var(--accent-color);
+            color: var(--dark-color);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 24px rgba(212, 165, 116, 0.4);
+            border-color: var(--accent-color);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: var(--light-color);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeInRight 0.8s ease-out 0.3s backwards;
+        }
+
+        .contact-form h3 {
+            font-size: 1.7rem;
+            margin-bottom: 2rem;
+            color: var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1.1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            background: var(--dark-color);
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: var(--secondary-color);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: var(--light-color);
+            box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.2);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.3rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.3);
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(212, 165, 116, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gradient-dark);
+            color: var(--text-light);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .footer p {
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .social-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .social-links a:hover {
+            color: var(--text-light);
+            transform: scale(1.1);
+        }
+
+        /* Cartoon Coffee Character */
+        .coffee-character {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            animation: characterEntrance 1s ease-out 1s backwards;
+        }
+
+        .character-container {
+            position: relative;
+            width: 150px;
+            height: 180px;
+            animation: characterFloat 3s ease-in-out infinite;
+        }
+
+        .coffee-cup {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 120px;
+            background: linear-gradient(135deg, #d4a574 0%, #c89968 100%);
+            border-radius: 15px 15px 25px 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 4px solid #8b6f47;
+        }
+
+        .coffee-cup::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: -25px;
+            width: 35px;
+            height: 50px;
+            background: transparent;
+            border: 4px solid #8b6f47;
+            border-radius: 0 50% 50% 0;
+            border-left: none;
+            animation: handleWiggle 2s ease-in-out infinite;
+        }
+
+        .cup-shine {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 30px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: rotate(-20deg);
+        }
+
+        .coffee-face {
+            position: absolute;
+            top: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 60px;
+        }
+
+        .eye {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #2d1f18;
+            border-radius: 50%;
+            animation: blink 4s infinite;
+        }
+
+        .eye-left {
+            left: 15px;
+            top: 10px;
+        }
+
+        .eye-right {
+            right: 15px;
+            top: 10px;
+        }
+
+        .smile {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+            border: 3px solid #2d1f18;
+            border-top: none;
+            border-radius: 0 0 40px 40px;
+            animation: smileChange 3s ease-in-out infinite;
+        }
+
+        .steam {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 50px;
+        }
+
+        .steam-puff {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: rgba(232, 212, 192, 0.6);
+            border-radius: 50%;
+            animation: steamRise 2s ease-in-out infinite;
+        }
+
+        .steam-puff:nth-child(1) {
+            left: 10px;
+            animation-delay: 0s;
+        }
+
+        .steam-puff:nth-child(2) {
+            left: 25px;
+            animation-delay: 0.3s;
+        }
+
+        .steam-puff:nth-child(3) {
+            left: 40px;
+            animation-delay: 0.6s;
+        }
+
+        .waving-hand {
+            position: absolute;
+            top: 30px;
+            right: -40px;
+            font-size: 35px;
+            animation: wave 1s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        .speech-bubble {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f5d5b8;
+            padding: 12px 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 3px solid #8b6f47;
+            animation: bubblePop 0.5s ease-out 1.5s backwards, bubbleFloat 2s ease-in-out 2s infinite;
+            white-space: nowrap;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid #f5d5b8;
+        }
+
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-top: 18px solid #8b6f47;
+            z-index: -1;
+        }
+
+        .bubble-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d1f18;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+                margin-top: 80px;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .contact-info,
+            .contact-form {
+                padding: 2rem;
+            }
+
+            .contact-info h2 {
+                font-size: 1.5rem;
+            }
+
+            .contact-page {
+                padding: 6rem 2rem 4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-menu {
+                gap: 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .contact-info,
+            .contact-form {
+                padding: 1.5rem;
+            }
+
+            .social-icons {
+                flex-direction: column;
+            }
+
+            .social-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .contact-page {
+                padding: 6rem 1rem 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="coffee-icon">☕</span>
+                <span>BrewMate</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="menu.html" class="nav-link">Menu</a></li>
+                <li><a href="delivery.html" class="nav-link">Track Order</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+            <div class="cart-icon">
+                🛒 <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <section class="contact-page">
+        <div class="container">
+            <h1 class="page-title">Get In Touch</h1>
+            <p class="page-subtitle">We'd love to brew the perfect conversation with you</p>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>☕ Visit Our Coffee Shop</h2>
+                    <p>Whether you have questions about our premium roasts, want to place a bulk order, or just want to chat about your favorite brew, we're here for you!</p>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">📍</span>
+                        <div>
+                            <h4>Visit Us</h4>
+                            <p>123 Coffee Street<br>Bean City, BC 12345</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">☎</span>
+                        <div>
+                            <h4>Call Us</h4>
+                            <p>(555) 987-6543</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">✉</span>
+                        <div>
+                            <h4>Email Us</h4>
+                            <p>hello@brewmate.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">⏰</span>
+                        <div>
+                            <h4>Hours of Brewing</h4>
+                            <p>Mon-Fri: 7AM - 8PM<br>Sat-Sun: 8AM - 9PM</p>
+                        </div>
+                    </div>
+
+                    <div class="social-section">
+                        <h4>☕ Follow Our Brew</h4>
+                        <div class="social-icons">
+                            <a href="#" class="social-btn">Facebook</a>
+                            <a href="#" class="social-btn">Instagram</a>
+                            <a href="#" class="social-btn">Twitter</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contactForm">
+                    <h3>☕ Send Us a Message</h3>
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Tell us about your coffee love story..." rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Brew a Response</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cartoon Coffee Character -->
+    <div class="coffee-character">
+        <div class="character-container">
+            <div class="speech-bubble">
+                <div class="bubble-text">Bye Bye! ☕</div>
+            </div>
+            <div class="waving-hand">👋</div>
+            <div class="coffee-cup">
+                <div class="cup-shine"></div>
+                <div class="steam">
+                    <div class="steam-puff"></div>
+                    <div class="steam-puff"></div>
+                    <div class="steam-puff"></div>
+                </div>
+                <div class="coffee-face">
+                    <div class="eye eye-left"></div>
+                    <div class="eye eye-right"></div>
+                    <div class="smile"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 BrewMate. All rights reserved. ☕</p>
+       
+    </footer>
+     <script src="script.js"></script>
+    <script src="cart-system.js"></script>
+</body>
+</html>

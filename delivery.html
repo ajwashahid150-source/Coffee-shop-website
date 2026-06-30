@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - BrewMate</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="coffee-icon">☕</span>
+                <span class="logo-text">BrewMate</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="menu.html" class="nav-link">Menu</a></li>
+                <li><a href="delivery.html" class="nav-link active">Track Order</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="cart-icon" onclick="window.location.href='menu.html#cart'">
+                🛒 <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Delivery Section -->
+    <section class="delivery-page">
+        <div class="container">
+            <h1 class="page-title">Track Your Order</h1>
+
+            <div class="delivery-tracker">
+                <div class="order-status">
+                    <div class="status-step completed">
+                        <div class="step-circle">✓</div>
+                        <p>Order Placed</p>
+                    </div>
+                    <div class="status-line completed"></div>
+                    <div class="status-step completed">
+                        <div class="step-circle">✓</div>
+                        <p>Preparing</p>
+                    </div>
+                    <div class="status-line active"></div>
+                    <div class="status-step active">
+                        <div class="step-circle">🚚</div>
+                        <p>Out for Delivery</p>
+                    </div>
+                    <div class="status-line"></div>
+                    <div class="status-step">
+                        <div class="step-circle">📦</div>
+                        <p>Delivered</p>
+                    </div>
+                </div>
+
+                <div class="delivery-map-container">
+                    <div id="map"></div>
+                    <div class="delivery-animation">
+                        <div class="road"></div>
+                        <div class="road-markings"></div>
+
+                        <!-- Cartoon Delivery Person -->
+                        <div class="delivery-man">
+                            <div class="delivery-person">
+                                <!-- Head -->
+                                <div class="head">
+                                    <div class="face">
+                                        <div class="eye eye-left"></div>
+                                        <div class="eye eye-right"></div>
+                                        <div class="smile"></div>
+                                    </div>
+                                    <div class="cap"></div>
+                                    <div class="cap-visor"></div>
+                                </div>
+
+                                <!-- Body -->
+                                <div class="body">
+                                    <div class="shirt-collar"></div>
+                                    <div class="company-logo">☕</div>
+                                </div>
+
+                                <!-- Arms -->
+                                <div class="arm arm-left">
+                                    <div class="hand"></div>
+                                </div>
+                                <div class="arm arm-right">
+                                    <div class="hand"></div>
+                                </div>
+
+                                <!-- Legs -->
+                                <div class="leg leg-left">
+                                    <div class="shoe"></div>
+                                </div>
+                                <div class="leg leg-right">
+                                    <div class="shoe"></div>
+                                </div>
+                            </div>
+
+                            <!-- Coffee Box -->
+                            <div class="coffee-box">
+                                <div class="box-top"></div>
+                                <div class="box-front">☕</div>
+                                <div class="steam-coming">
+                                    <span>~</span>
+                                    <span>~</span>
+                                    <span>~</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Destination -->
+                        <div class="destination">
+                            <div class="house">
+                                <div class="house-roof"></div>
+                                <div class="house-body"></div>
+                                <div class="house-door"></div>
+                                <div class="house-window"></div>
+                            </div>
+                        </div>
+
+                        <!-- Scenery -->
+                        <div class="scenery">
+                        </div>
+                    </div>
+                </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 BrewMate. All rights reserved.</p>
+           
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script.js"></script>
+    <script src="script.js"></script>  <!-- Your existing file stays -->
+<script src="cart-system.js"></script>  <!-- ADD THIS LINE -->
+</body>
+
+</html>

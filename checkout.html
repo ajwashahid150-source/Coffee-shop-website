@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrewMate - Checkout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6F4E37;
+            --secondary-color: #8B6F47;
+            --accent-color: #D4A574;
+            --dark-color: #2C1810;
+            --darker-bg: #1a0f0a;
+            --light-color: #3E2723;
+            --text-light: #F5E6D3;
+            --gradient: linear-gradient(135deg, #6F4E37 0%, #8B6F47 100%);
+            --gradient-dark: linear-gradient(135deg, #2C1810 0%, #3E2723 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-light);
+            background: var(--darker-bg);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--gradient-dark);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .coffee-icon {
+            font-size: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+
+        .cart-icon {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cart-icon:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        /* Main Container */
+        .checkout-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* Left Side - Order Items */
+        .order-section {
+            background: var(--light-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Cart Items */
+        .cart-items {
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: var(--dark-color);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s;
+        }
+
+        .cart-item:hover {
+            background: var(--primary-color);
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #d4a574 0%, #c89968 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        .item-description {
+            font-size: 0.9rem;
+            color: #b8956f;
+            margin-bottom: 5px;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 15px;
+        }
+
+        .qty-btn {
+            background: var(--accent-color);
+            color: var(--dark-color);
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .qty-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .qty-display {
+            width: 30px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .remove-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #b71c1c;
+        }
+
+        /* Delivery Options */
+        .delivery-section {
+            background: var(--dark-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .delivery-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .delivery-option:hover {
+            border-color: var(--accent-color);
+        }
+
+        .delivery-option input[type="radio"] {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .delivery-info {
+            flex: 1;
+        }
+
+        .delivery-title {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .delivery-time {
+            font-size: 0.9rem;
+            color: #b8956f;
+        }
+
+        /* Right Side - Order Summary */
+        .summary-section {
+            background: var(--light-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--dark-color);
+        }
+
+        .summary-label {
+            color: #b8956f;
+        }
+
+        .summary-value {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .summary-total .summary-value {
+            font-size: 1.5rem;
+        }
+
+        /* Checkout Button */
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 165, 116, 0.5);
+        }
+
+        .continue-shopping {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .continue-shopping:hover {
+            background: var(--accent-color);
+            color: var(--dark-color);
+        }
+
+        /* Empty Cart Message */
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            color: #b8956f;
+        }
+
+        .empty-cart-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-section {
+                position: relative;
+                top: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .checkout-container {
+                padding: 90px 10px 40px;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .item-controls {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="coffee-icon">☕</span>
+                <span class="logo-text">BrewMate</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="menu.html" class="nav-link">Menu</a></li>
+                <li><a href="delivery.html" class="nav-link active">Track Order</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="cart-icon" onclick="window.location.href='menu.html#cart'">
+                🛒 <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Container -->
+    <div class="checkout-container">
+        <!-- Left Side - Order Items -->
+        <div class="order-section">
+            <h2 class="section-title">☕ Your Order</h2>
+            <div id="successMessage" class="success-message"></div>
+            
+            <div id="cartItemsContainer" class="cart-items"></div>
+
+            <!-- Delivery Options -->
+            <div class="delivery-section">
+                <h3 style="color: var(--accent-color); margin-bottom: 15px;">Delivery Method</h3>
+                <label class="delivery-option">
+                    <input type="radio" name="delivery" value="standard" checked onchange="updateDelivery()">
+                    <div class="delivery-info">
+                        <div class="delivery-title">Standard Delivery</div>
+                        <div class="delivery-time">3-5 hours</div>
+                    </div>
+                    <span style="color: var(--accent-color); font-weight: bold;">Free</span>
+                </label>
+                <label class="delivery-option">
+                    <input type="radio" name="delivery" value="express" onchange="updateDelivery()">
+                    <div class="delivery-info">
+                        <div class="delivery-title">Express Delivery</div>
+                        <div class="delivery-time">1-2 hours</div>
+                    </div>
+                    <span style="color: var(--accent-color); font-weight: bold;">+$5</span>
+                </label>
+                <label class="delivery-option">
+                    <input type="radio" name="delivery" value="pickup" onchange="updateDelivery()">
+                    <div class="delivery-info">
+                        <div class="delivery-title">Pickup</div>
+                        <div class="delivery-time">Ready in 30 mins</div>
+                    </div>
+                    <span style="color: var(--accent-color); font-weight: bold;">Free</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Right Side - Order Summary -->
+        <div class="summary-section">
+            <h2 class="section-title">Order Summary</h2>
+            
+            <div class="summary-item">
+                <span class="summary-label">Subtotal</span>
+                <span class="summary-value">$<span id="subtotal">0.00</span></span>
+            </div>
+            
+            <div class="summary-item">
+                <span class="summary-label">Delivery</span>
+                <span class="summary-value">$<span id="deliveryFee">0.00</span></span>
+            </div>
+            
+            <div class="summary-item">
+                <span class="summary-label">Tax (10%)</span>
+                <span class="summary-value">$<span id="tax">0.00</span></span>
+            </div>
+            
+            <div class="summary-total">
+                <span>Total</span>
+                <span class="summary-value">$<span id="total">0.00</span></span>
+            </div>
+
+            <button class="checkout-btn" onclick="proceedCheckout()">Proceed to Payment</button>
+            <button class="continue-shopping" onclick="goHome()">Continue Shopping</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample coffee menu
+        const coffeeMenu = [
+            { id: 1, name: 'Americano', description: 'Strong espresso with hot water', price: 3.99, emoji: '☕' },
+            { id: 2, name: 'Cappuccino', description: 'Espresso with steamed milk and foam', price: 4.49, emoji: '🥛' },
+            { id: 3, name: 'Espresso', description: 'Strong concentrated coffee', price: 2.99, emoji: '🔥' },
+            { id: 4, name: 'Macchiato', description: 'Espresso marked with milk', price: 3.99, emoji: '✨' },
+            { id: 5, name: 'Latte', description: 'Smooth espresso with steamed milk', price: 4.99, emoji: '🍶' },
+            { id: 6, name: 'Mocha', description: 'Chocolate espresso with milk', price: 5.49, emoji: '🍫' }
+        ];
+
+        let cart = [];
+        let deliveryFee = 0;
+
+        // Initialize cart from localStorage
+        function initializeCart() {
+            const savedCart = localStorage.getItem('brewmateCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            } else {
+                // Add some sample items if cart is empty
+                cart = [
+                    { ...coffeeMenu[0], quantity: 2 },
+                    { ...coffeeMenu[1], quantity: 1 },
+                    { ...coffeeMenu[3], quantity: 1 }
+                ];
+                localStorage.setItem('brewmateCart', JSON.stringify(cart));
+            }
+            renderCart();
+            updateSummary();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItemsContainer');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="empty-cart"><div class="empty-cart-icon">🛒</div><p>Your cart is empty. Continue shopping to add items!</p></div>';
+                document.getElementById('cartCount').textContent = '0';
+                return;
+            }
+
+            let html = '';
+            cart.forEach((item, index) => {
+                html += `
+                    <div class="cart-item">
+                        <div class="item-image">${item.emoji}</div>
+                        <div class="item-details">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-description">${item.description}</div>
+                            <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                        </div>
+                        <div class="item-controls">
+                            <button class="qty-btn" onclick="decreaseQty(${index})">−</button>
+                            <div class="qty-display">${item.quantity}</div>
+                            <button class="qty-btn" onclick="increaseQty(${index})">+</button>
+                            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            document.getElementById('cartCount').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
+
+        function increaseQty(index) {
+            cart[index].quantity++;
+            saveCart();
+            renderCart();
+            updateSummary();
+        }
+
+        function decreaseQty(index) {
+            if (cart[index].quantity > 1) {
+                cart[index].quantity--;
+                saveCart();
+                renderCart();
+                updateSummary();
+            }
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            saveCart();
+            renderCart();
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = subtotal * 0.1;
+            const total = subtotal + tax + deliveryFee;
+
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('deliveryFee').textContent = deliveryFee.toFixed(2);
+            document.getElementById('tax').textContent = tax.toFixed(2);
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        function updateDelivery() {
+            const deliveryMethod = document.querySelector('input[name="delivery"]:checked').value;
+            if (deliveryMethod === 'express') {
+                deliveryFee = 5;
+            } else {
+                deliveryFee = 0;
+            }
+            updateSummary();
+        }
+
+        function saveCart() {
+            localStorage.setItem('brewmateCart', JSON.stringify(cart));
+        }
+
+        function proceedCheckout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            const total = document.getElementById('total').textContent;
+            const deliveryMethod = document.querySelector('input[name="delivery"]:checked').value;
+            
+            const successMsg = document.getElementById('successMessage');
+            successMsg.textContent = `✅ Order placed successfully! Total: $${total}. Delivery method: ${deliveryMethod.toUpperCase()}. You will receive a confirmation shortly.`;
+            successMsg.classList.add('show');
+
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+        }
+
+        function goHome() {
+            alert('Redirecting to home page...');
+            // In real app: window.location.href = 'index.html';
+        }
+
+        function viewCheckout() {
+            // Already on checkout page
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            initializeCart();
+        };
+    </script>
+    <script src="script.js"></script>  <!-- Your existing file stays -->
+<script src="cart-system.js"></script>  <!-- ADD THIS LINE -->
+</body>
+</html>
